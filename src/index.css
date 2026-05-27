@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-syne: "Syne", sans-serif;
+
+  --color-brand-black: #131313;
+  --color-brand-darkest: #0e0e0e;
+  --color-brand-dark: #1c1b1b;
+  --color-brand-medium: #20201f;
+  --color-brand-grey: #4c4546;
+  --color-brand-lightgrey: #cfc4c5;
+  --color-brand-white: #e5e2e1;
+  --color-brand-accent: #0057FF;
+}
+
+@layer base {
+  body {
+    background-color: #131313;
+    color: #e5e2e1;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}
+
+@keyframes revealAndLift {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4c4546;
+  border-radius: 2px;
+}

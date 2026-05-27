@@ -1,0 +1,6 @@
+{
+  "name": "SNEAKER LAB",
+  "description": "Premium footwear collection and technical urban streetwear brand. Features dynamic catalogs, technical breakdowns, full custom cart management, and interactive premium design overlays.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
