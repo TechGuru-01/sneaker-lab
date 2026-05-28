@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { motion } from "motion/react";
-import { EmptyCart } from "../components/EmptyCart.jsx";
-import { CartItemRow } from "../components/CartItemRow.jsx";
-import { CartSummary } from "../components/CartSummary.jsx";
-import { CartRecommendations } from "../components/CartRecommendation.jsx";
+import { EmptyCart } from "../components/cart/EmptyCart.jsx";
+import { CartItemRow } from "../components/cart/CartItemRow.jsx";
+import { CartSummary } from "../components/cart/CartSummary.jsx";
+import { CartRecommendations } from "../components/cart/CartRecommendation.jsx";
 
 export const Cart = ({
   cart,

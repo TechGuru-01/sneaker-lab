@@ -3,7 +3,6 @@ import axios from "axios";
 
 export const socialLogin = async (req, res) => {
   try {
-    // 1. TAMA AT REFACTOR: Diretso nang basahin sa req.body (Salamat sa express.json())
     const { token, auth_provider } = req.body;
 
     if (!token || !auth_provider) {
@@ -15,7 +14,6 @@ export const socialLogin = async (req, res) => {
     let email = "";
     let provider_id = "";
 
-    // 2. Fetch data mula sa Google o Facebook
     if (auth_provider === "google") {
       const googleUserData = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -43,7 +41,6 @@ export const socialLogin = async (req, res) => {
         .json({ error: "Failed to retrieve email from provider" });
     }
 
-    // 3. Database Check
     const userExistQuery = "SELECT * FROM users WHERE email = $1";
     const userExist = await pool.query(userExistQuery, [email]);
 
@@ -70,13 +67,16 @@ export const socialLogin = async (req, res) => {
           `[LOGIN-PROVIDER-LINK] User switched to ${auth_provider}: ${email}`,
         );
 
-        // 🌟 ONLINE LOGIC VIA EXPRESS SESSION
         req.session.userId = userToSession.id;
         req.session.email = userToSession.email;
+        req.session.role = userToSession.role;
         req.session.isLoggedIn = true;
 
+        // 💡 FIXED: Isinama ang token at role sa root level
         return res.status(200).json({
           message: "Welcome back! Account linked.",
+          token: token,
+          role: userToSession.role,
           user: userToSession,
         });
       }
@@ -84,17 +84,20 @@ export const socialLogin = async (req, res) => {
       userToSession = existingUser;
       console.log(`[LOGIN] User connected via ${auth_provider}: ${email}`);
 
-      // 🌟 ONLINE LOGIC VIA EXPRESS SESSION
       req.session.userId = userToSession.id;
       req.session.email = userToSession.email;
+      req.session.role = userToSession.role;
       req.session.isLoggedIn = true;
 
-      return res
-        .status(200)
-        .json({ message: "Welcome back!", user: userToSession });
+      // 💡 FIXED: Isinama ang token at role sa root level
+      return res.status(200).json({
+        message: "Welcome back!",
+        token: token,
+        role: userToSession.role,
+        user: userToSession,
+      });
     }
 
-    // 4. Register New User kung wala pa sa DB
     const insertUserQuery = `
       INSERT INTO users (first_name, last_name, email, auth_provider, provider_id) 
       VALUES ($1, $2, $3, $4, $5) RETURNING *`;
@@ -112,14 +115,18 @@ export const socialLogin = async (req, res) => {
       `[REGISTER] New account created via ${auth_provider}: ${email}`,
     );
 
-    // 🌟 ONLINE LOGIC VIA EXPRESS SESSION
     req.session.userId = userToSession.id;
     req.session.email = userToSession.email;
+    req.session.role = userToSession.role;
     req.session.isLoggedIn = true;
 
-    return res
-      .status(201)
-      .json({ message: "Account created!", user: userToSession });
+    // 💡 FIXED: Isinama ang token at role sa root level
+    return res.status(201).json({
+      message: "Account created!",
+      token: token,
+      role: userToSession.role,
+      user: userToSession,
+    });
   } catch (error) {
     console.log("\n====== BACKEND ERROR DETECTED ======");
     console.error("MESSAGE:", error.message);

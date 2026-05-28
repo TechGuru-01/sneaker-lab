@@ -1,5 +1,5 @@
 import React from "react";
-import { PRODUCTS } from "../data";
+import { PRODUCTS } from "../../data";
 
 export const ProductComplements = ({
   navigateToPdp,

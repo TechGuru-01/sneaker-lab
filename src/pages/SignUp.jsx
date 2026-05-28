@@ -46,8 +46,23 @@ export default function SignUp({
         const data = await response.json();
 
         if (response.ok) {
-          localStorage.setItem("token", tokenResponse.access_token);
-          setActivePage(redirectTarget || "home");
+          // 💡 FIXED: Basahin nang ligtas ang role galing sa root level o user sub-object, saka gawing lowercase
+          const userRole = (
+            data.role ||
+            data.user?.role ||
+            "user"
+          ).toLowerCase();
+          const userToken = data.token || tokenResponse.access_token;
+
+          localStorage.setItem("token", userToken);
+          localStorage.setItem("userRole", userRole);
+
+          // 💡 REDIRECT LOGIC: Kung admin, itapon agad sa admin panel view
+          if (userRole === "admin") {
+            setActivePage("admin");
+          } else {
+            setActivePage(redirectTarget || "home");
+          }
           setRedirectTarget(null);
         } else {
           alert(`Error: ${data.error || "Something went wrong"}`);
@@ -101,8 +116,18 @@ export default function SignUp({
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", token);
-        setActivePage(redirectTarget || "home");
+        // 💡 FIXED: Case-insensitive fallback check para sa Facebook login naman
+        const userRole = (data.role || data.user?.role || "user").toLowerCase();
+        const userToken = data.token || token;
+
+        localStorage.setItem("token", userToken);
+        localStorage.setItem("userRole", userRole);
+
+        if (userRole === "admin") {
+          setActivePage("admin");
+        } else {
+          setActivePage(redirectTarget || "home");
+        }
         setRedirectTarget(null);
       } else {
         alert(`Error: ${data.error || "Something went wrong"}`);

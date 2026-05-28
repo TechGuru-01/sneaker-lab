@@ -2,10 +2,10 @@ import React, { useState, useMemo } from "react";
 import { motion } from "motion/react";
 import { Info } from "lucide-react";
 import { PRODUCTS } from "../data";
-import { ProductCard } from "../components/ProductCard.jsx";
-import { CollectionsFilters } from "../components/CollectionsFilters.jsx";
+import { ProductCard } from "../components/products/ProductCard.jsx";
+import { CollectionsFilters } from "../components/collections/CollectionsFilters.jsx";
 
-import { CollectionsPagination } from "../components/CollectionsPagination.jsx";
+import { CollectionsPagination } from "../components/collections/CollectionsPagination.jsx";
 export const Collections = ({
   filters,
   setFilters,

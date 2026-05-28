@@ -47,13 +47,12 @@ APP.use(
 
 //ROUTING
 APP.post("/api/auth/social-login", socialLogin);
-// ROUTING
-APP.post("/api/auth/social-login", socialLogin);
+
 
 
 APP.post("/api/cart/checkout", (req, res) => {
   if (!req.session || !req.session.isLoggedIn) {
-    return res.status(401).json({ error: "Unauthorized: Mangyaring mag-login muna." });
+    return res.status(401).json({ error: "Unauthorized: Login first." });
   }
 
   return res.status(200).json({

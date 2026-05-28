@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { PRODUCTS } from "../data";
-import { ProductCard } from "../components/ProductCard";
+import { ProductCard } from "../components/products/ProductCard";
 import { motion } from "framer-motion";
 
 export const Home = ({

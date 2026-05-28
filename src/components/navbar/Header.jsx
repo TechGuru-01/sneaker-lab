@@ -13,6 +13,7 @@ export const Header = ({
   cartCount,
   onTriggerNotification,
   setRedirectTarget,
+  isAdmin = false, // 💡 Nagdagdag ng prop para malaman kung admin ang naka-login
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -179,6 +180,23 @@ export const Header = ({
               >
                 SALE
               </button>
+
+              {/* 💡 DESKTOP ADMIN CORE LINK - Lalabas lang kapag isAdmin === true */}
+              {isAdmin && (
+                <>
+                  <div className="h-4 w-[1px] bg-brand-grey/40 self-center mx-1"></div>
+                  <button
+                    onClick={() => setActivePage("admin")}
+                    className={`py-2 transition-all border-b-2 hover:text-brand-accent tracking-widest ${
+                      activePage === "admin"
+                        ? "text-brand-accent border-brand-accent"
+                        : "text-brand-lightgrey/40 border-transparent"
+                    }`}
+                  >
+                    [ADMIN_CORE]
+                  </button>
+                </>
+              )}
             </nav>
           </div>
 
@@ -355,6 +373,23 @@ export const Header = ({
             >
               SALE
             </button>
+
+            {/* 💡 MOBILE ADMIN FEATURE TRIGGER - Lalabas lang kapag isAdmin === true */}
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setActivePage("admin");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left py-2 border-b border-brand-grey/20 tracking-widest font-mono ${
+                  activePage === "admin"
+                    ? "text-brand-accent"
+                    : "text-brand-accent/70"
+                }`}
+              >
+                [⚙️ SYSTEM_ADMIN_CORE]
+              </button>
+            )}
           </nav>
         </div>
 
